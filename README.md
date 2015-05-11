@@ -21,7 +21,7 @@ has the exact solution
 >>> def K(t,s):
 ...     return 1 + t + s
 ...
->>> F = volterra.block_step(K, g, 0.1, 100, mu=0.5, F0=1.0)
+>>> F = volterra.block(K, g, 0.1, 100, mu=0.5, F0=1.0)
 >>> np.allclose(F, 1/(1+t), atol=1e-2, rtol=0.0)
 True
 ```

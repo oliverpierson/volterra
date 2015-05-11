@@ -27,6 +27,18 @@ def midpt(k, g, t, h, mu=0.5):
     ----------
     ..  [1] P. Lenz, "Analytical and Numerical Methods for Volterra Equations"
         Ch. 10, SIAM, 1985
+
+    Example
+    ------
+    >>> def g(t):
+    ...   return 2*t*np.arctanh(np.sqrt(t/(t+1))) / np.sqrt(t+1) + 2*np.sqrt(t)
+    ... 
+    >>> def K(t,s):
+    ...     return 1 + t + s
+    ...
+    >>> F, t = midpt(K, g, 1.0, 0.1, mu=0.5)
+    >>> np.allclose(F, 1/(1+t), atol=1e-2, rtol=0.0)
+    True
     """
     assert(mu > 0.0)
     N = int(np.round(t/h))
@@ -74,6 +86,21 @@ def block(K, g, h, N, mu=0.5, F0=None):
     ----------
     ..  [1] P. Lenz, "Analytical and Numerical Methods for Volterra Equations"
         Ch. 10, SIAM, 1985
+
+    Example
+    ------
+    >>> def g(t):
+    ...   return 2*t*np.arctanh(np.sqrt(t/(t+1))) / np.sqrt(t+1) + 2*np.sqrt(t)
+    ... 
+    >>> def K(t,s):
+    ...     return 1 + t + s
+    ...
+    >>> dt = 0.1
+    >>> N = 100
+    >>> F = block(K, g, dt, N, mu=0.5, F0=1.0)
+    >>> t = np.arange(0.0, N*dt, dt)
+    >>> np.allclose(F, 1/(1+t), atol=1e-2, rtol=0.0)
+    True
     """
     assert(F0 != None)
     F = np.zeros(N)
@@ -133,3 +160,7 @@ def block(K, g, h, N, mu=0.5, F0=None):
     for m in np.arange(1,N-1):
         F[m:(m+2)] = np.linalg.solve(h**(1-mu)*A(m+1), S(m+1))
     return F
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
