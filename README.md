@@ -26,3 +26,7 @@ has the exact solution
 True
 ```
 [1]: http://epubs.siam.org/doi/book/10.1137/1.9781611970852
+
+# Issues
+* At the moment, the solvers only work for `mu=0.5`, but fixing this should be easy (I already have the needed formulas and it's just a matter of typing them out in Python)
+* For the `block` method solver, an initial value `f(0)` is required (this is provided as an optional argument `F0`).  The relevant formula for computing an initial value is given in Linz, so eventually this requirement will be lifted.
