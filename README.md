@@ -1,5 +1,5 @@
 # Volterra Equation Solver
-[volterra.py](./volterra.py) implements two methods for solving Volterra integral equations of the first kind,
+This implements two methods for solving Volterra integral equations of the first kind,
 
 ![volterra equation](./eqn.png)
 
@@ -15,18 +15,24 @@ has the exact solution
 ![example soln](./example_soln.png)
 
 ```python
+>>> import volterra
 >>> def g(t):
 ...   return 2*t*np.arctanh(np.sqrt(t/(t+1))) / np.sqrt(t+1) + 2*np.sqrt(t)
-... 
+...
 >>> def K(t,s):
 ...     return 1 + t + s
 ...
->>> F = volterra.block(K, g, 0.1, 100, mu=0.5, F0=1.0)
+>>> dt = 0.1
+>>> t = np.arange(0.0, 100*dt, dt)
+>>> F = volterra.block(K, g, dt, 100, mu=0.5)
 >>> np.allclose(F, 1/(1+t), atol=1e-2, rtol=0.0)
 True
+>>> plot(t, F, '.')
+>>> plot(t, 1/(1+t), 'k-')
 ```
+![example plot](./example_plot.png)
 [1]: http://epubs.siam.org/doi/book/10.1137/1.9781611970852
 
 # Issues
 * At the moment, the solvers only work for `mu=0.5`, but fixing this should be easy (I already have the needed formulas and it's just a matter of typing them out in Python)
-* For the `block` method solver, an initial value `f(0)` is required (this is provided as an optional argument `F0`).  The relevant formula for computing an initial value is given in Linz, so eventually this requirement will be lifted.
+* The block method needs a value for `f(0)` in order to start.  You can supply a value with the optional argument `F0`.  If you don't provided a value, `block` will attempt to find a value, however it may choose poorly so beware!
