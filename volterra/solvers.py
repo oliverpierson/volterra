@@ -97,12 +97,14 @@ def block(K, g, h, N, mu=0.5, F0=None):
     ...
     >>> dt = 0.1
     >>> N = 100
-    >>> F = block(K, g, dt, N, mu=0.5, F0=1.0)
+    >>> F = block(K, g, dt, N, mu=0.5)
     >>> t = np.arange(0.0, N*dt, dt)
     >>> np.allclose(F, 1/(1+t), atol=1e-2, rtol=0.0)
     True
     """
-    assert(F0 != None)
+    if(F0 == None):
+        eps = np.finfo(float).eps
+        F0 = g(2*eps)/(K(eps, 2*eps)*2*np.sqrt(2*eps))
     F = np.zeros(N)
     F[0] = F0
 
