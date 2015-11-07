@@ -5,6 +5,8 @@ This implements two methods for solving Volterra integral equations of the first
 
 These are integral equations for the function `f` where `g` and `K` are known functions.  Note the  `t` in the integration bounds.  The factor `(t-s)^{-\mu}` accounts for any singularities in the kernel `K`.  In other words, if you have an integral equation such that `K(t,t)` is unbounded (singular) and `K(t,s)` diverges like `(t-s)^{-\mu}` as `t->s`, rewrite it in the form above (so that `K` is well-behaved part of the origial kernel).
 
+The methods used are based on [Linz, Ch. 10][1].  However, I have derived some of the formulas used here myself, since I had trouble implementing the formulas provided in the text.  In any case, the spirit of the methods were inspired by the book.
+
 # Example
 The integral equation (taken from P. Linz, [Analytical and Numerical Methods for Volterra Equations][1])
 
