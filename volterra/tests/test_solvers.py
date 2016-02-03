@@ -52,7 +52,7 @@ def test_block2():
 
     N = 100
     dt = 0.01
-    t = np.arange(0., dt*N, dt)
+    t = np.arange(dt, dt*N, dt)
     F = block(k, g, dt, N)
 
-    assert np.allclose(F[1:], (np.exp(-0.5/t)/np.sqrt(2*np.pi*t**3))[1:], atol=3e-3, rtol=0.0)
+    assert np.allclose(F[1:], (np.exp(-0.5/t)/np.sqrt(2*np.pi*t**3)), atol=3e-3, rtol=0.0)
